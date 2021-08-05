@@ -1,0 +1,51 @@
+version: '3'
+services:
+  minidetector:
+    build: .
+    image: minidetector:${TAG}
+    hostname: ${APP_NAME}-app
+    container_name: ${APP_NAME}-app
+    environment:
+      - DB_URI=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/minidetector
+    depends_on:
+      - db
+    links:
+      - db:db
+    restart: on-failure
+    networks:
+      - minidetector-net
+
+  db:
+    image: postgres:12-alpine
+    hostname: ${APP_NAME}-db
+    container_name: ${APP_NAME}-db
+    environment:
+      - POSTGRES_DB=minidetector
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "5432:5432"
+    command: postgres -c 'max_connections=1000'
+    stdin_open: true
+    tty: true
+    networks:
+      - minidetector-net
+
+  api:
+    image: minidetector:${TAG}
+    container_name: ${APP_NAME}-api
+    hostname: ${APP_NAME}-api
+    environment:
+      - DB_URI=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/minidetector
+    depends_on:
+      - db
+      - minidetector
+    entrypoint: ["python", "-m", "minidetector.api"]
+    ports:
+      - "80:80"
+    networks:
+      - minidetector-net
+
+networks:
+  minidetector-net:

@@ -2,10 +2,12 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.declarative import declarative_base
+import os
 
-db_string = "postgres://detector@/minidetector"
-
-engine = create_engine(db_string)
+engine = create_engine(os.getenv("DB_URI"),
+                       pool_size=200,
+                       max_overflow=200,
+                       pool_recycle=100)
 Base = declarative_base()
 
 

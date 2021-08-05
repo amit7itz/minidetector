@@ -12,7 +12,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),
-    install_requires=['scapy', 'sqlalchemy', 'psycopg2'],
+    install_requires=['scapy', 'sqlalchemy', 'psycopg2', 'flask', 'flask-restful', 'flask-marshmallow'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

@@ -31,3 +31,42 @@ INFO:root:Added entity <Entity id=11 MAC=9c:30:5b:25:1b:d5 IP=10.0.0.2>
 INFO:root:Added entity <Entity id=12 MAC=00:b8:c2:26:9d:bc IP=143.204.194.95>
 ```
 You may use the `--help` flag to see all available flags.
+
+
+
+### Run Mini Detector in containers:
+To run this application in micro-services, please following the next steps. 
+
+#### Pre-requisites
+Please install docker engine on machine and docker-compose. 
+
+For Centos:
+```bash
+# Docker Installation:
+curl https://download.docker.com/linux/centos/docker-ce.repo -o /etc/yum.repos.d/docker-ce.repo
+sed -i -e "s/enabled=1/enabled=0/g" /etc/yum.repos.d/docker-ce.repo
+yum --enablerepo=docker-ce-stable -y install docker-ce
+
+# Docker-Compose Installation: 
+pip install docker-compose
+```
+
+For Ubuntu:
+```bash
+# Docker Installation:
+apt -y install docker.io
+
+# Docker-Compose Installation: 
+pip install docker-compose
+```
+
+#### Run Docker Containers:
+For run the all deployment, please do the following command:
+```bash
+docker-compose up -d
+```
+
+To chech status:
+```bash
+docker-compose ps -a
+```
